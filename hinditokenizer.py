@@ -1,5 +1,6 @@
 import regex as re
 from base_tokenizer import Tokenizer, get_stats, merge
+from tqdm import tqdm
 
 DEVANAGARI_SPLIT_PATTERN = r"""'s|'t|'re|'ve|'m|'ll|'d| ?\p{N}+| ?(?:[\u0904-\u0939\u093d-\u093d\u0950-\u0950\u0958-\u0961\u0970-\u097f\ua8f2-\ua8fe\U00011b00-\U00011b09\u1cd3-\u1cd3\u1ce9-\u1cec\u1cee-\u1cf3\u1cf5-\u1cf6\u1cfa-\u1cfa][\u0900-\u0903\u093a-\u093c\u093e-\u094f\u0951-\u0957\u0962-\u0963\ua8e0-\ua8f1\ua8ff-\ua8ff\u1cd0-\u1cd2\u1cd4-\u1ce8\u1ced-\u1ced\u1cf4-\u1cf4\u1cf7-\u1cf9]*)+| ?\p{L}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+"""
 
@@ -36,7 +37,8 @@ class DevanagariTokenizer(Tokenizer):
             # calculate length of tokens for compression ratio.
             # total token length is sum of all token length in each chunk.
             input_len += len(chunk_ids)
-        for i in range(num_merges):
+        # for i in range(num_merges):
+        for i in tqdm(range(num_merges), desc="Merging pairs", unit="merge"):
             # count the number of times every consecutive pair appears
             stats = {}
             for chunk_ids in ids:
