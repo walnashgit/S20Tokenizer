@@ -98,3 +98,7 @@ The training process:
 ## Demo
 
 Hugging face app: [Tokenizer_Hindi](https://huggingface.co/spaces/walnash/Tokenizer_Hindi)
+
+## Note
+
+⚠️ The model provided in this repository (`hindi.model`) is trained on a small dataset for demonstration purposes. For production use or more accurate tokenization, it is recommended to train the model on a larger, domain-specific dataset that better represents your use case.
