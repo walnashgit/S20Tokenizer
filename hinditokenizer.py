@@ -22,6 +22,7 @@ class DevanagariTokenizer(Tokenizer):
     def train(self, text, vocab_size, verbose=False):
         assert vocab_size >= 256
         num_merges = vocab_size - 256
+        input_len = len(text.encode('utf-8'))
 
         # split the text up into text chunks
         text_chunks = re.findall(self.compiled_pattern, text)
@@ -32,11 +33,11 @@ class DevanagariTokenizer(Tokenizer):
         # iteratively merge the most common pairs to create new tokens
         merges = {}  # (int, int) -> int
         vocab = {idx: bytes([idx]) for idx in range(256)}  # idx -> bytes
-        input_len = 0
-        for chunk_ids in ids:
-            # calculate length of tokens for compression ratio.
-            # total token length is sum of all token length in each chunk.
-            input_len += len(chunk_ids)
+        # input_len = 0
+        # for chunk_ids in ids:
+        #     # calculate length of tokens for compression ratio.
+        #     # total token length is sum of all token length in each chunk.
+        #     input_len += len(chunk_ids)
         # for i in range(num_merges):
         for i in tqdm(range(num_merges), desc="Merging pairs", unit="merge"):
             # count the number of times every consecutive pair appears
